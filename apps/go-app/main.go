@@ -43,7 +43,7 @@ func main() {
 
 	e := echo.New()
 	e.HideBanner = true
-	
+
 	// Setup validator
 	v := validator.New()
 	v.RegisterTagNameFunc(func(fld reflect.StructField) string {

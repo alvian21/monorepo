@@ -24,4 +24,3 @@ type UpdateTopicRequest struct {
 type TopicFilter struct {
 	Search string `json:"search" query:"search"`
 }
-

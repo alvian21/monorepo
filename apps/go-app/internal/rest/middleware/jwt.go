@@ -1,9 +1,9 @@
 package middleware
 
 import (
+	"go-app/utils"
 	"net/http"
 	"strings"
-	"go-app/utils"
 
 	"github.com/labstack/echo/v4"
 )

@@ -25,7 +25,7 @@ func runMigration(db *sql.DB, dir string, args []string) error {
 		migrationName := args[1]
 		err = goose.Create(db, dir, migrationName, "sql")
 	case "up":
-		err = goose.Up(db, dir)
+		err = goose.Up(db, dir, goose.WithAllowMissing())
 	case "down":
 		err = goose.Down(db, dir)
 	case "reset":

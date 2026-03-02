@@ -20,10 +20,10 @@ func TestNewsCRUD_E2E(t *testing.T) {
 	// Wire the routes and services
 	topicRepo := postgres.NewTopicRepository(kit.DB)
 	newsRepo := postgres.NewNewsRepository(kit.DB)
-	
+
 	topicSvc := service.NewTopicService(topicRepo)
 	newsSvc := service.NewNewsService(newsRepo, topicRepo)
-	
+
 	rest.NewTopicHandler(kit.Echo.Group("/api/v1/topics"), topicSvc)
 	rest.NewNewsHandler(kit.Echo.Group("/api/v1/news"), newsSvc)
 

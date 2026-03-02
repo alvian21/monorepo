@@ -1,11 +1,11 @@
 package utils
 
 import (
+	"go-app/domain"
 	"log/slog"
 	"os"
 	"strconv"
 	"time"
-	"go-app/domain"
 
 	"github.com/golang-jwt/jwt/v5"
 )

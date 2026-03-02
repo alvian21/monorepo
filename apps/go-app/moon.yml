@@ -31,7 +31,7 @@ tasks:
 
   test:
     command: "go test ./... -count 1"
-    deps: ["tidy", "generate-mock"]
+    deps: ["tidy", "generate-mock", "migration-up"]
     options:
       cache: false
 

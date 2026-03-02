@@ -15,13 +15,13 @@ const (
 )
 
 type News struct {
-	ID        uuid.UUID    `json:"id"`
-	Title     string       `json:"title"`
-	Content   string       `json:"content"`
-	Status    NewsStatus   `json:"status"`
-	CreatedAt time.Time    `json:"created_at"`
-	UpdatedAt time.Time    `json:"updated_at"`
-	Topics    []Topic      `json:"topics,omitempty"`
+	ID        uuid.UUID  `json:"id"`
+	Title     string     `json:"title"`
+	Content   string     `json:"content"`
+	Status    NewsStatus `json:"status"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	Topics    []Topic    `json:"topics,omitempty"`
 }
 
 type CreateNewsRequest struct {
@@ -41,4 +41,3 @@ type NewsFilter struct {
 	Status NewsStatus `json:"status" query:"status"`
 	Search string     `json:"search" query:"search"`
 }
-
