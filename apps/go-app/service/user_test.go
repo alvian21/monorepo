@@ -15,7 +15,7 @@ import (
 )
 
 func TestUserService_CreateUser(t *testing.T) {
-	mockUserRepo := new(mocks.UserRepository)
+	mockUserRepo := new(mocks.MockUserRepository)
 
 	userService := service.NewUserService(mockUserRepo)
 
@@ -45,7 +45,7 @@ func TestUserService_CreateUser(t *testing.T) {
 	})
 
 	t.Run("Returns error when repository fails", func(t *testing.T) {
-		mockUserRepo = new(mocks.UserRepository)
+		mockUserRepo = new(mocks.MockUserRepository)
 		userService = service.NewUserService(mockUserRepo)
 
 		repoErr := errors.New("database error")
@@ -62,7 +62,7 @@ func TestUserService_CreateUser(t *testing.T) {
 }
 
 func TestUserService_GetUser(t *testing.T) {
-	mockUserRepo := new(mocks.UserRepository)
+	mockUserRepo := new(mocks.MockUserRepository)
 	userService := service.NewUserService(mockUserRepo)
 
 	ctx := context.Background()
@@ -87,7 +87,7 @@ func TestUserService_GetUser(t *testing.T) {
 	})
 
 	t.Run("Returns error when repository fails", func(t *testing.T) {
-		mockUserRepo = new(mocks.UserRepository)
+		mockUserRepo = new(mocks.MockUserRepository)
 		userService = service.NewUserService(mockUserRepo)
 
 		repoErr := errors.New("network error")
@@ -103,7 +103,7 @@ func TestUserService_GetUser(t *testing.T) {
 	})
 
 	t.Run("Returns nil when user not found in repository", func(t *testing.T) {
-		mockUserRepo = new(mocks.UserRepository)
+		mockUserRepo = new(mocks.MockUserRepository)
 		userService = service.NewUserService(mockUserRepo)
 
 		mockUserRepo.On("GetUser", mock.Anything, userID).Return(nil, nil).Once()
@@ -118,7 +118,7 @@ func TestUserService_GetUser(t *testing.T) {
 }
 
 func TestUserService_UpdateUser(t *testing.T) {
-	mockUserRepo := new(mocks.UserRepository)
+	mockUserRepo := new(mocks.MockUserRepository)
 	userService := service.NewUserService(mockUserRepo)
 
 	ctx := context.Background()
@@ -154,7 +154,7 @@ func TestUserService_UpdateUser(t *testing.T) {
 	})
 
 	t.Run("Returns ErrUserNotFound if user does not exist", func(t *testing.T) {
-		mockUserRepo = new(mocks.UserRepository)
+		mockUserRepo = new(mocks.MockUserRepository)
 		userService = service.NewUserService(mockUserRepo)
 
 		mockUserRepo.On("GetUser", mock.Anything, userID).Return(nil, nil).Once()
@@ -168,7 +168,7 @@ func TestUserService_UpdateUser(t *testing.T) {
 	})
 
 	t.Run("Returns error if GetUser fails", func(t *testing.T) {
-		mockUserRepo = new(mocks.UserRepository)
+		mockUserRepo = new(mocks.MockUserRepository)
 		userService = service.NewUserService(mockUserRepo)
 
 		repoErr := errors.New("get user repo error")
@@ -184,7 +184,7 @@ func TestUserService_UpdateUser(t *testing.T) {
 	})
 
 	t.Run("Returns error if UpdateUser fails", func(t *testing.T) {
-		mockUserRepo = new(mocks.UserRepository)
+		mockUserRepo = new(mocks.MockUserRepository)
 		userService = service.NewUserService(mockUserRepo)
 
 		mockUserRepo.On("GetUser", mock.Anything, userID).Return(existingUser, nil).Once()
@@ -208,7 +208,7 @@ func TestUserService_UpdateUser(t *testing.T) {
 }
 
 func TestUserService_DeleteUser(t *testing.T) {
-	mockUserRepo := new(mocks.UserRepository)
+	mockUserRepo := new(mocks.MockUserRepository)
 	userService := service.NewUserService(mockUserRepo)
 
 	ctx := context.Background()
@@ -230,7 +230,7 @@ func TestUserService_DeleteUser(t *testing.T) {
 	})
 
 	t.Run("Returns ErrUserNotFound if user does not exist", func(t *testing.T) {
-		mockUserRepo = new(mocks.UserRepository)
+		mockUserRepo = new(mocks.MockUserRepository)
 		userService = service.NewUserService(mockUserRepo)
 
 		mockUserRepo.On("GetUser", mock.Anything, userID).Return(nil, nil).Once()
@@ -242,7 +242,7 @@ func TestUserService_DeleteUser(t *testing.T) {
 	})
 
 	t.Run("Returns error if GetUser fails", func(t *testing.T) {
-		mockUserRepo = new(mocks.UserRepository)
+		mockUserRepo = new(mocks.MockUserRepository)
 		userService = service.NewUserService(mockUserRepo)
 
 		repoErr := errors.New("get user repo error during delete")
@@ -256,7 +256,7 @@ func TestUserService_DeleteUser(t *testing.T) {
 	})
 
 	t.Run("Returns error if DeleteUser fails", func(t *testing.T) {
-		mockUserRepo = new(mocks.UserRepository)
+		mockUserRepo = new(mocks.MockUserRepository)
 		userService = service.NewUserService(mockUserRepo)
 
 		mockUserRepo.On("GetUser", mock.Anything, userID).Return(existingUser, nil).Once()
@@ -272,7 +272,7 @@ func TestUserService_DeleteUser(t *testing.T) {
 }
 
 func TestUserService_GetUserList(t *testing.T) {
-	mockUserRepo := new(mocks.UserRepository)
+	mockUserRepo := new(mocks.MockUserRepository)
 	userService := service.NewUserService(mockUserRepo)
 
 	ctx := context.Background()
@@ -298,7 +298,7 @@ func TestUserService_GetUserList(t *testing.T) {
 	})
 
 	t.Run("Returns empty list when no users found", func(t *testing.T) {
-		mockUserRepo = new(mocks.UserRepository)
+		mockUserRepo = new(mocks.MockUserRepository)
 		userService = service.NewUserService(mockUserRepo)
 
 		mockUserRepo.On("GetUserList", mock.Anything, filter).Return([]domain.User{}, nil).Once()
@@ -313,7 +313,7 @@ func TestUserService_GetUserList(t *testing.T) {
 	})
 
 	t.Run("Returns error when repository fails", func(t *testing.T) {
-		mockUserRepo = new(mocks.UserRepository)
+		mockUserRepo = new(mocks.MockUserRepository)
 		userService = service.NewUserService(mockUserRepo)
 
 		repoErr := errors.New("get user list database error")

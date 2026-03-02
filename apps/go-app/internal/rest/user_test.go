@@ -3,12 +3,12 @@ package rest_test
 import (
 	"context"
 	"fmt"
-	"net/http"
-	"testing"
 	"go-app/domain"
 	"go-app/internal/repository/postgres"
 	"go-app/internal/rest"
 	"go-app/service"
+	"net/http"
+	"testing"
 
 	"github.com/stretchr/testify/require"
 )
@@ -19,7 +19,7 @@ func TestUserCRUD_E2E(t *testing.T) {
 	// Wire the routes and services
 	userRepo := postgres.NewUserRepository(kit.DB, kit.Metrics)
 	userSvc := service.NewUserService(userRepo)
-	rest.NewUserHandler(kit.Echo.Group("/api/v1"), userSvc)
+	rest.NewUserHandler(kit.Echo.Group("/api/v1/users"), userSvc)
 
 	// Now start the test server
 	kit.Start(t)
@@ -51,7 +51,7 @@ func TestUserCRUD_E2E(t *testing.T) {
 	require.Equal(t, user.ID, getE.Data.ID)
 
 	// Update
-	updPayload := domain.User{
+	updPayload := domain.UpdateUserRequest{
 		Name:  "Jane Doe",
 		Email: "jane@example.com",
 	}

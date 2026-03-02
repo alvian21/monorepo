@@ -33,7 +33,7 @@ tasks:
     command: "build/go-app"
 
   test:
-    command: "go test ./... -count=1"
+    command: "go test ./... -count 1"
     deps: ["tidy", "generate-mock"]
     options:
       cache: false

@@ -11,6 +11,9 @@ import (
 	"go-app/database"
 	"go-app/internal/metrics"
 
+	"go-app/internal/rest"
+
+	"github.com/go-playground/validator/v10"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -54,6 +57,7 @@ func NewTestKit(t *testing.T) *TestKit {
 	// 2) new Echo instance
 	e := echo.New()
 	e.HideBanner = true
+	e.Validator = &rest.CustomValidator{Validator: validator.New()}
 
 	// 3) setup Postgres pool
 	dbPool, err := database.SetupPgxPool()
