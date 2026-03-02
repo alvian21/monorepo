@@ -25,14 +25,14 @@ type News struct {
 }
 
 type CreateNewsRequest struct {
-	Title    string      `json:"title" validate:"required"`
-	Content  string      `json:"content" validate:"required"`
+	Title    string      `json:"title" validate:"required,min=5,max=200"`
+	Content  string      `json:"content" validate:"required,min=10"`
 	TopicIDs []uuid.UUID `json:"topic_ids"`
 }
 
 type UpdateNewsRequest struct {
-	Title    string      `json:"title" validate:"required"`
-	Content  string      `json:"content" validate:"required"`
+	Title    string      `json:"title" validate:"required,min=5,max=200"`
+	Content  string      `json:"content" validate:"required,min=10"`
 	Status   NewsStatus  `json:"status" validate:"required,oneof=DRAFT PUBLISHED DELETED"`
 	TopicIDs []uuid.UUID `json:"topic_ids"`
 }

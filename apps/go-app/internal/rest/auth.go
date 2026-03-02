@@ -45,6 +45,13 @@ func (h *AuthHandler) Login(c echo.Context) error {
 		})
 	}
 
+	if err := c.Validate(&req); err != nil {
+		return c.JSON(http.StatusBadRequest, domain.ResponseSingleData[domain.Empty]{
+			Code:    http.StatusBadRequest,
+			Message: FormatValidationError(err),
+		})
+	}
+
 	ctx := c.Request().Context()
 	result, err := h.Service.Login(ctx, req.Email, req.Password)
 	if err != nil {

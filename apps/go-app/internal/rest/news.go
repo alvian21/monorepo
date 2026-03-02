@@ -89,6 +89,13 @@ func (h *NewsHandler) CreateNews(c echo.Context) error {
 		})
 	}
 
+	if err := c.Validate(&req); err != nil {
+		return c.JSON(http.StatusBadRequest, domain.ResponseSingleData[domain.Empty]{
+			Code:    http.StatusBadRequest,
+			Message: FormatValidationError(err),
+		})
+	}
+
 	news, err := h.Service.CreateNews(c.Request().Context(), &req)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, domain.ResponseSingleData[domain.Empty]{
@@ -118,6 +125,13 @@ func (h *NewsHandler) UpdateNews(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, domain.ResponseSingleData[domain.Empty]{
 			Code:    http.StatusBadRequest,
 			Message: "Invalid request",
+		})
+	}
+
+	if err := c.Validate(&req); err != nil {
+		return c.JSON(http.StatusBadRequest, domain.ResponseSingleData[domain.Empty]{
+			Code:    http.StatusBadRequest,
+			Message: FormatValidationError(err),
 		})
 	}
 

@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"reflect"
+	"strings"
 	"time"
 
 	"go-app/config"
@@ -19,6 +21,7 @@ import (
 	"go-app/internal/rest/middleware"
 	"go-app/service"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
@@ -40,6 +43,17 @@ func main() {
 
 	e := echo.New()
 	e.HideBanner = true
+	
+	// Setup validator
+	v := validator.New()
+	v.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
+		if name == "-" {
+			return ""
+		}
+		return name
+	})
+	e.Validator = &rest.CustomValidator{Validator: v}
 
 	e.Logger.SetOutput(os.Stdout)
 	e.Logger.SetLevel(0)

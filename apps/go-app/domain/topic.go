@@ -14,11 +14,11 @@ type Topic struct {
 }
 
 type CreateTopicRequest struct {
-	Name string `json:"name" validate:"required"`
+	Name string `json:"name" validate:"required,min=3,max=50"`
 }
 
 type UpdateTopicRequest struct {
-	Name string `json:"name" validate:"required"`
+	Name string `json:"name" validate:"required,min=3,max=50"`
 }
 
 type TopicFilter struct {

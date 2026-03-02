@@ -4,10 +4,10 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"log/slog"
-	"net/http"
 	"go-app/domain"
 	"go-app/internal/logging"
+	"log/slog"
+	"net/http"
 
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
@@ -119,6 +119,13 @@ func (h *UserHandler) CreateUser(c echo.Context) error {
 		})
 	}
 
+	if err := c.Validate(&user); err != nil {
+		return c.JSON(http.StatusBadRequest, domain.ResponseSingleData[domain.Empty]{
+			Code:    http.StatusBadRequest,
+			Message: FormatValidationError(err),
+		})
+	}
+
 	ctx := c.Request().Context()
 	createdUser, err := h.Service.CreateUser(ctx, &user)
 	if err != nil {
@@ -146,16 +153,26 @@ func (h *UserHandler) UpdateUser(c echo.Context) error {
 		})
 	}
 
-	var user domain.User
-	if err := c.Bind(&user); err != nil {
+	var userUpdate domain.UpdateUserRequest
+	if err := c.Bind(&userUpdate); err != nil {
 		return c.JSON(http.StatusBadRequest, domain.ResponseSingleData[domain.Empty]{
 			Code:    http.StatusBadRequest,
 			Message: "Invalid request payload",
 		})
 	}
 
+	if err := c.Validate(&userUpdate); err != nil {
+		return c.JSON(http.StatusBadRequest, domain.ResponseSingleData[domain.Empty]{
+			Code:    http.StatusBadRequest,
+			Message: FormatValidationError(err),
+		})
+	}
+
 	ctx := c.Request().Context()
-	updatedUser, err := h.Service.UpdateUser(ctx, id, &user)
+	updatedUser, err := h.Service.UpdateUser(ctx, id, &domain.User{
+		Name:  userUpdate.Name,
+		Email: userUpdate.Email,
+	})
 	if err != nil {
 		logging.LogError(ctx, err, "update_user")
 		return c.JSON(http.StatusInternalServerError, domain.ResponseSingleData[domain.Empty]{
