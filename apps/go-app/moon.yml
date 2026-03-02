@@ -9,13 +9,10 @@ tags: ["app", "backend"]
 # Overrides the name (identifier) of the project
 id: "go-app"
 
+type: 'application'
 project:
   name: "go-app"
   description: "My backend application"
-  type: application
-
-toolchains:
-  default: null
 
 tasks:
   dev:
