@@ -31,11 +31,11 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
-      - name: Install dependencies
-        run: pnpm install
-
       - name: Setup moon
         uses: moonrepo/setup-moon-action@v1
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Install Mockery
         run: |

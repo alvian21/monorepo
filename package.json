@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
+    "@moonrepo/cli": "^1.26.2",
     "npm-check-updates": "catalog:"
   },
   "pnpm": {
