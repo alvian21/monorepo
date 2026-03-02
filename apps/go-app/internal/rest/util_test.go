@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 
 	"go-app/database"
@@ -38,8 +39,11 @@ type TestKit struct {
 // loadEnv loads environment variables from a .env file located two levels up.
 // It fatals the test if loading fails.
 func loadEnv(t *testing.T) {
+	if os.Getenv("DATABASE_URL") != "" {
+		return
+	}
 	if err := godotenv.Load("../../.env"); err != nil {
-		t.Fatal("failed to load .env (DATABASE_URL must be set): ", err)
+		t.Log("Warning: .env file not found, proceeding with environmental variables")
 	}
 }
 
