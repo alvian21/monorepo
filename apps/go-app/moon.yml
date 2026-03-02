@@ -57,21 +57,41 @@ tasks:
 
   migration-create:
     command: "go run ./cmd/ migrate create"
+    options:
+      cache: false
+      internal: true
+      runInCI: false
 
   migration-up:
     command: "go run ./cmd/ migrate up"
+    options:
+      cache: false
 
   migration-down:
     command: "go run ./cmd/ migrate down"
+    options:
+      cache: false
+      internal: true
+      runInCI: false
 
   migration-reset:
     command: "go run ./cmd/ migrate reset"
+    options:
+      cache: false
+      internal: true
+      runInCI: false
 
   migration-version:
     command: "go run ./cmd/ migrate version"
+    options:
+      cache: false
+      internal: true
+      runInCI: false
 
   seed:
     command: "go run ./cmd/ seed"
+    options:
+      cache: false
 
   install-mockery:
     command: "../../.moon/scripts/install_mockery.sh v3.5.1"
@@ -84,6 +104,8 @@ tasks:
     command: "swag init -o docs --parseDependency"
     options:
       cache: false
+      internal: true
+      runInCI: false
 
   docker-build:
     script: |
